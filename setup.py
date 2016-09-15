@@ -8,8 +8,8 @@ setup(
     license='GLPv3',
     author='pav',
     author_email='vpapavasil@gmail.com',
-    description='Bottle.py QueryString Params consistent handling.',
+    description='Bottle.py QueryString Params smart guessing.',
     extras_require={
-        'test': ['pytest', 'bottle', 'six'],
+        'test': ['pytest', 'bottle', 'ujson', 'webtest'],
     }
 )
