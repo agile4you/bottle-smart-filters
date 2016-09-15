@@ -17,7 +17,7 @@
 #
 """`bottle_smart_filters` package.
 
-Handling Querystring Params consistent in bottle.py apps.
+Smart Querystring Params guessing for bottle.py applications.
 """
 
 
