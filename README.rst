@@ -4,9 +4,10 @@ Provides a bottle.py plugin for querystring parameters smart guessing.
 
 Features:
 ---------
-    - Provides default type casting for integers, floats, booleans.
+    - Provides default type casting for integers, floats, booleans (of course strings).
+    - Supports JSON params (i.e Elastic Search URL's like GET /?q={"id": 34, "age": 39})
     - Provides a mechanism for multiple value params through separators.
-    - Smart filter is attached to `bottle.Bottle.request.query` instance,
+    - Smart filter  callback is attached to `bottle.Bottle.request.query` instance,
       so it doesn't mess your implementation.
     - Useful Pre-processor for any validation library or custom implementation.
 
