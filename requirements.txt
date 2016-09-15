@@ -4,4 +4,4 @@ coverage
 coveralls
 pytest-cov
 ujson
-bottle
+webtest

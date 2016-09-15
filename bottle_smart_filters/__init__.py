@@ -15,7 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""`bottle_filters` package.
+"""`bottle_smart_filters` package.
 
 Handling Querystring Params consistent in bottle.py apps.
 """
@@ -26,16 +26,16 @@ __version__ = '0.1'
 __author__ = 'Papavassiliou Vassilis'
 __date__ = '2016-9-14'
 
-__all__ = ('QueryFilterSet', 'QueryParam', 'QueryFilterError', 'QueryFilterPlugin')
+__all__ = ('SmartFiltersPlugin', )
 
-from bottle_filters.parser import (QueryFilterSet, QueryParam, QueryFilterError)
-import inspect
+from functools import partial
 import bottle
 import ujson
 
 
-class QueryFilterPlugin(object):
-    """A `bottle.Bottle` application plugin for JWTProvider.
+class SmartFiltersPlugin(object):
+    """Bottle.py application plugin for query string parameters smart detection.
+
     Attributes:
         keyword (str): The string keyword for application registry.
         filter_set (instance): A QueryFilterSet instance.
@@ -43,12 +43,10 @@ class QueryFilterPlugin(object):
     scope = ('plugin', 'middleware')
     api = 2
 
-    def __init__(self, multiple_separator=','):
-        self.keyword = 'query_filters'
+    def __init__(self, keyword='smart_filters', multiple_separator=',', json_identifiers=None):
+        self.keyword = keyword
         self.separator = multiple_separator
-        self.json_identifiers = {'[', '{'}
-        setattr(bottle.request.query, 'smart_query',
-                lambda _: partial(self.filter_set, _))
+        self.json_identifiers = set(json_identifiers) if json_identifiers else {'[', '{'}
 
     def setup(self, app):  # pragma: no cover
         """Make sure that other installed plugins don't affect the same
@@ -56,7 +54,7 @@ class QueryFilterPlugin(object):
         """
 
         for other in app.plugins:
-            if not isinstance(other, QueryFilterPlugin):
+            if not isinstance(other, SmartFiltersPlugin):
                 continue
             if other.keyword == self.keyword:
                 raise bottle.PluginError("Found another plugin "
@@ -66,35 +64,38 @@ class QueryFilterPlugin(object):
     def apply(self, callback, context):  # pragma: no cover
         """Implement bottle.py API version 2 `apply` method.
         """
-        from functools import partial
+        assert context
 
         def _wrapper(*args, **kwargs):
             """Decorated Injection
             """
-
-            setattr(bottle.request, 'filter_set',
-                    lambda _: self.filter_set(bottle.request.query))
-
-            # setattr(bottle.request.query, 'smart_query',
-            #          lambda _: partial(self.filter_set, _))
+            setattr(bottle.request.query, 'smart_filters',
+                    lambda: partial(self.filter_set, bottle.request.query)())
 
             return callback(*args, **kwargs)
 
         return _wrapper
 
     def filter_set(self, query_data):
-        """Query Filter formatting
+        """Query Filter smart guessing functionality.
+
+        Args:
+            query_data (object): A `bottle.FormsDict` instance.
+
+        Returns:
+            A dictionary mapping of querystring names -> smart guessed values (if possible or just the values)
         """
-        print(self.separator)
 
         request_data = dict(query_data.iteritems())
 
         request_filters = {}
 
+        if not request_data:
+            return {}
+
         for alias, value in request_data.items():
 
             if self.separator not in value or set(value).intersection(self.json_identifiers):
-                print(alias)
                 try:
                     request_filters[alias] = ujson.loads(value)
                 except ValueError:

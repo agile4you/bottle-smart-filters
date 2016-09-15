@@ -5,6 +5,6 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 # command to run tests
-script: py.test --cov=bottle_filters test/
+script: py.test --cov=bottle_smart_filters test/
 after_success:
   coveralls
