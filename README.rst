@@ -13,10 +13,10 @@ Features:
 
 .. note:: This is NOT A Querystring validation library!
 
-.. image:: https://travis-ci.org/agile4you/bottle-jwt.svg?branch=master
+.. image:: https://travis-ci.org/agile4you/bottle-smart-filters.svg?branch=master
     :target: https://travis-ci.org/agile4you/bottle-smart-filters
 
-.. image:: https://coveralls.io/repos/agile4you/bottle-jwt/badge.svg?branch=master&service=github
+.. image:: https://coveralls.io/repos/agile4you/bottle-smart-filters/badge.svg?branch=master&service=github
     :target: https://coveralls.io/github/agile4you/bottle-smart-filters?branch=master
 
 *Example Usage*
