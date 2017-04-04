@@ -37,12 +37,12 @@ Features:
     bottle.run()
 
 
-*Example endpoints*::
+*Example URL's*::
 
     - GET /?id=12434&membership=true&score=9.4&email=someone@somewhere.com
-        * Smart Filter inspection:
+        * Smart Filter output:
           {"id": 12343, "member": True, "score": 9.4, "email": "someone@somewhere.com"}
 
-    - GET /?numbers=1,2, 3,4,5&gps={"x": 734.092, "y": 0.9873948}
-        * Smart Filter inspection:
-          {"number": [1, 2, 3, 4, 5], "gps": {"x": 734.092, "y": 0.9873948}}
+    - GET /?numbers=1,2, 3,4,&gps={"lat": 33.093, "lng": "23.090"}
+        * Smart Filter output:
+          {"number": [1, 2, 3, 4, 5], "gps": {"lat": 33.093, "lng": "23.090"}}
