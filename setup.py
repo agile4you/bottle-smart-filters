@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='bottle-filters',
+    name='bottle-smart-filters',
     version='0.1',
     packages=['bottle_smart_filters'],
     url='https://github.com/agile4you/bottle-smart-filters',

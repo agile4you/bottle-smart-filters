@@ -40,9 +40,9 @@ Features:
 *Example endpoints*::
 
     - GET /?id=12434&membership=true&score=9.4&email=someone@somewhere.com
-        * Smart Filter output:
+        * Smart Filter inspection:
           {"id": 12343, "member": True, "score": 9.4, "email": "someone@somewhere.com"}
 
-    - GET /?numbers=1,2, 3,4,5
-        * Smart Filter output:
-          {"number": [1, 2, 3, 4, 5]}
+    - GET /?numbers=1,2, 3,4,5&gps={"x": 734.092, "y": 0.9873948}
+        * Smart Filter inspection:
+          {"number": [1, 2, 3, 4, 5], "gps": {"x": 734.092, "y": 0.9873948}}

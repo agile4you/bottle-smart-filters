@@ -21,7 +21,7 @@ Smart Querystring Params guessing for bottle.py applications.
 """
 
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 __author__ = 'Papavassiliou Vassilis'
 __date__ = '2016-9-14'
